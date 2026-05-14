@@ -287,8 +287,10 @@ main {
 .about-intro img {
   width: 164px;
   max-width: 100%;
-  aspect-ratio: 0.72;
+  aspect-ratio: 1 / 1;
+  border-radius: 50%;
   object-fit: cover;
+  object-position: 50% 47%;
 }
 
 .about-intro h1 {

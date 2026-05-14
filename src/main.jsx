@@ -225,7 +225,7 @@ function About() {
   return (
     <section className="about-section">
       <div className="about-intro">
-        <img src="/assets/ad-profile.png" alt="Portrait Adrien Desrames" />
+        <img src="/assets/about-photo.jpeg" alt="Portrait Adrien Desrames" />
         <h1>
           A curated body of work exploring digital systems, <strong>design</strong> and
           modern entrepreneurship — built with <strong>intention</strong>, not excess <span>→</span>
