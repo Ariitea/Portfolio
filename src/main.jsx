@@ -185,10 +185,10 @@ function ProjectRail({ onProjectOpen }) {
             );
           })}
         </div>
-      </div>
-      <div className="mobile-counter">
-        <span>- {activeIndex + 1}</span>
-        <span>{8 + activeIndex}<em>-16</em></span>
+        <div className="mobile-counter">
+          <span>- {activeIndex + 1}</span>
+          <span>{8 + activeIndex}<em>-16</em></span>
+        </div>
       </div>
     </section>
   );
