@@ -214,7 +214,7 @@ function ProjectRail({ onProjectOpen }) {
         </div>
         <div className="mobile-counter">
           <span>- {activeIndex + 1}</span>
-          <span>{8 + activeIndex}</span>
+          <span>{8 + activeIndex} -</span>
         </div>
       </div>
     </section>
