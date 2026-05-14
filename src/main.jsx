@@ -171,7 +171,7 @@ function ProjectRail({ onProjectOpen }) {
                 className={`project-card ${index === activeIndex ? 'is-active' : ''}`}
                 key={project.title}
                 type="button"
-                onClick={() => onProjectOpen(project)}
+                onClick={() => onProjectOpen(index)}
                 style={{
                   '--x': `${offset}vw`,
                   '--scale': scale,
@@ -263,8 +263,13 @@ function Footer() {
   );
 }
 
-function ProjectOverlay({ project, onClose }) {
-  if (!project) return null;
+function ProjectOverlay({ projectIndex, onProjectChange, onClose }) {
+  if (projectIndex === null) return null;
+  const project = projects[projectIndex];
+  const previousIndex = (projectIndex - 1 + projects.length) % projects.length;
+  const nextIndex = (projectIndex + 1) % projects.length;
+  const previousProject = projects[previousIndex];
+  const nextProject = projects[nextIndex];
   const gallery = project.gallery ?? projects.map((item) => item.image);
 
   return (
@@ -295,8 +300,8 @@ function ProjectOverlay({ project, onClose }) {
         </div>
       </div>
       <div className="project-overlay__pager">
-        <span>← Kittyhub</span>
-        <span>Oupa →</span>
+        <button type="button" onClick={() => onProjectChange(previousIndex)}>← {previousProject.title}</button>
+        <button type="button" onClick={() => onProjectChange(nextIndex)}>{nextProject.title} →</button>
       </div>
       <button className="project-overlay__close" type="button" onClick={onClose} aria-label="Close">
         <X size={22} />
@@ -307,12 +312,12 @@ function ProjectOverlay({ project, onClose }) {
 
 function App() {
   const loaderProgress = useLoaderProgress();
-  const [selectedProject, setSelectedProject] = useState(null);
+  const [selectedProjectIndex, setSelectedProjectIndex] = useState(null);
   const loaded = loaderProgress >= 100;
 
   useEffect(() => {
-    document.body.classList.toggle('is-project-open', Boolean(selectedProject));
-  }, [selectedProject]);
+    document.body.classList.toggle('is-project-open', selectedProjectIndex !== null);
+  }, [selectedProjectIndex]);
 
   return (
     <>
@@ -321,13 +326,17 @@ function App() {
         onContactClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
       />
       <main>
-        <ProjectRail onProjectOpen={setSelectedProject} />
+        <ProjectRail onProjectOpen={setSelectedProjectIndex} />
         <About />
         <Contact />
       </main>
       <Footer />
       <Loader progress={loaderProgress} finished={loaded} />
-      <ProjectOverlay project={selectedProject} onClose={() => setSelectedProject(null)} />
+      <ProjectOverlay
+        projectIndex={selectedProjectIndex}
+        onProjectChange={setSelectedProjectIndex}
+        onClose={() => setSelectedProjectIndex(null)}
+      />
     </>
   );
 }

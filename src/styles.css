@@ -175,7 +175,7 @@ main {
 }
 
 .project-viewport::after {
-  content: '';
+  content: none;
   position: absolute;
   width: clamp(250px, 34vw, 520px);
   aspect-ratio: 1 / 1;
@@ -588,6 +588,18 @@ main {
   font-size: 15px;
 }
 
+.project-overlay__pager button {
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+}
+
+.project-overlay__pager button:hover {
+  text-decoration: underline;
+}
+
 @keyframes overlay-in {
   from {
     clip-path: inset(48% 48% 48% 48%);
@@ -671,8 +683,8 @@ main {
     top: 44px;
     height: calc(100vh - 44px);
     min-height: 760px;
-    place-items: start center;
-    padding-top: 172px;
+    place-items: center;
+    padding-top: 0;
   }
 
   .project-rail {
@@ -680,18 +692,17 @@ main {
   }
 
   .project-card {
-    width: min(70vw, 300px);
-    height: 520px;
+    width: min(76vw, 330px);
+    height: min(104vw, 520px);
     aspect-ratio: auto;
-    transform: translate(-50%, 0) translateX(calc(var(--x) * 0.78)) scale(calc(var(--scale) + 0.18));
-    transform-origin: center top;
+    transform: translate(-50%, -50%) translateX(calc(var(--x) * 1.18)) scale(calc(var(--scale) + 0.06));
+    transform-origin: center;
   }
 
   .project-viewport::after {
     width: min(70vw, 300px);
     height: 520px;
     aspect-ratio: auto;
-    top: 172px;
   }
 
   .project-card img {
