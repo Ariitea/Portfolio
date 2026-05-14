@@ -10,6 +10,7 @@ const projects = [
     type: 'e-shop',
     image: '/assets/bg.png',
     detail: '/assets/bg.png',
+    url: 'https://momaz-app.vercel.app',
     gallery: [
       '/assets/bg.png',
       '/assets/project-detail.png',
@@ -307,22 +308,18 @@ function ProjectOverlay({ projectIndex, onProjectChange, onClose }) {
       </button>
       <div className="project-overlay__date">{project.period.replace(' ', '  ·  ')}</div>
       <h2>{project.title}</h2>
-      <span className="project-overlay__type">{project.type}</span>
+      {project.url ? (
+        <a className="project-overlay__type" href={project.url} target="_blank" rel="noreferrer">
+          {project.type}
+        </a>
+      ) : (
+        <span className="project-overlay__type">{project.type}</span>
+      )}
       <div className="project-overlay__side" aria-hidden="true">
-        <div className="gallery-lines gallery-lines--top">
-          <span />
-          <span />
-          <span />
-        </div>
         <div className="project-overlay__gallery">
           {[...gallery, ...gallery].map((src, index) => (
             <img key={`${src}-${index}`} src={src} alt="" />
           ))}
-        </div>
-        <div className="gallery-lines gallery-lines--bottom">
-          <span />
-          <span />
-          <span />
         </div>
       </div>
       <div className="project-overlay__pager">

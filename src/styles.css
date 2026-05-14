@@ -531,8 +531,14 @@ main {
   padding: 18px 20px;
   transform: translateX(-50%);
   background: rgba(0, 0, 0, 0.88);
+  color: white;
+  text-decoration: none;
   text-align: center;
   font-size: 16px;
+}
+
+.project-overlay__type:hover {
+  text-decoration: underline;
 }
 
 .project-overlay__side {
@@ -547,18 +553,6 @@ main {
   gap: 12px;
   overflow: hidden;
   padding: 0 0 2px;
-}
-
-.gallery-lines {
-  display: grid;
-  flex: 0 0 auto;
-  gap: 14px;
-}
-
-.gallery-lines span {
-  display: block;
-  height: 4px;
-  background: white;
 }
 
 .project-overlay__gallery {
