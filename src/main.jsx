@@ -114,18 +114,48 @@ function useSectionScrollProgress(ref) {
 }
 
 function Header({ onProjectsClick, onContactClick }) {
+  const [menuOpen, setMenuOpen] = useState(false);
+
+  useEffect(() => {
+    document.body.classList.toggle('is-menu-open', menuOpen);
+    return () => document.body.classList.remove('is-menu-open');
+  }, [menuOpen]);
+
+  const goToProjects = () => {
+    setMenuOpen(false);
+    onProjectsClick();
+  };
+
+  const goToContact = () => {
+    setMenuOpen(false);
+    onContactClick();
+  };
+
   return (
     <header className="site-header">
       <button className="mark" type="button" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
         <img src="/assets/black-logo.png" alt="Adrien Desrames" />
       </button>
       <nav className="desktop-nav">
-        <button type="button" onClick={onProjectsClick}>Projects</button>
-        <button type="button" onClick={onContactClick}>Contacts</button>
+        <button type="button" onClick={goToProjects}>Projects</button>
+        <button type="button" onClick={goToContact}>Contacts</button>
       </nav>
-      <button className="mobile-menu" type="button" aria-label="Menu">
-        <Layers size={20} fill="currentColor" strokeWidth={1.8} />
+      <button
+        className="mobile-menu"
+        type="button"
+        aria-label={menuOpen ? 'Close menu' : 'Open menu'}
+        aria-expanded={menuOpen}
+        onClick={() => setMenuOpen((open) => !open)}
+      >
+        {menuOpen ? <X size={22} strokeWidth={1.8} /> : <Layers size={20} fill="currentColor" strokeWidth={1.8} />}
       </button>
+      <div className={`mobile-panel ${menuOpen ? 'is-open' : ''}`} aria-hidden={!menuOpen}>
+        <img src="/assets/black-logo.png" alt="Adrien Desrames" />
+        <nav>
+          <button type="button" onClick={goToProjects}>projets</button>
+          <button type="button" onClick={goToContact}>contact</button>
+        </nav>
+      </div>
     </header>
   );
 }
@@ -153,10 +183,6 @@ function ProjectRail({ onProjectOpen }) {
 
   return (
     <section ref={railRef} className="projects-section" id="projects">
-      <div className="mobile-brand">
-        <img src="/assets/black-logo.png" alt="Adrien Desrames" />
-        <Layers size={19} fill="currentColor" />
-      </div>
       <div className="project-viewport">
         <div className="project-rail" style={{ '--active': activeIndex }}>
           {projects.map((project, index) => {

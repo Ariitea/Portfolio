@@ -35,7 +35,8 @@ button {
   color: inherit;
 }
 
-body.is-project-open {
+body.is-project-open,
+body.is-menu-open {
   overflow: hidden;
 }
 
@@ -97,8 +98,21 @@ body.is-project-open {
 }
 
 .mobile-menu,
-.mobile-brand {
+.mobile-panel {
   display: none;
+}
+
+.mobile-panel {
+  position: fixed;
+  z-index: 1;
+  inset: 0;
+  min-height: 100vh;
+  background: #f4f4f4;
+  color: var(--ink);
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(-16px);
+  transition: opacity 380ms ease, transform 520ms cubic-bezier(0.76, 0, 0.24, 1);
 }
 
 main {
@@ -620,19 +634,30 @@ main {
 
 @media (max-width: 760px) {
   .site-header {
+    z-index: 50;
     height: 44px;
-    grid-template-columns: 1fr auto;
+    grid-template-columns: 1fr auto 1fr;
     padding: 0 28px;
   }
 
-  .mark,
   .desktop-nav,
   .icon-button {
     display: none;
   }
 
+  .mark {
+    display: block;
+    grid-column: 2;
+    width: 16px;
+    height: 30px;
+    justify-self: center;
+  }
+
   .mobile-menu {
     display: inline-flex;
+    position: relative;
+    z-index: 2;
+    grid-column: 3;
     justify-self: end;
     width: 34px;
     height: 34px;
@@ -640,36 +665,57 @@ main {
     justify-content: center;
   }
 
-  .mobile-brand {
-    position: fixed;
-    z-index: 21;
-    top: 0;
-    left: 0;
-    right: 0;
+  .mobile-panel {
     display: grid;
-    height: 44px;
-    grid-template-columns: 1fr auto 1fr;
-    align-items: center;
+    grid-template-rows: 44px 1fr;
     padding: 0 28px;
-    background: #f4f4f4;
   }
 
-.mobile-brand strong {
-  grid-column: 2;
-  font-size: 16px;
-}
+  .mobile-panel.is-open {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(0);
+  }
 
-.mobile-brand img {
-  grid-column: 2;
-  width: 16px;
-  height: 30px;
-  object-fit: contain;
-}
+  .mobile-panel img {
+    grid-row: 1;
+    width: 16px;
+    height: 30px;
+    align-self: center;
+    justify-self: center;
+    object-fit: contain;
+  }
 
-.mobile-brand svg {
-  grid-column: 3;
-  justify-self: end;
-}
+  .mobile-panel nav {
+    display: flex;
+    grid-row: 2;
+    flex-direction: column;
+    justify-content: center;
+    gap: 30px;
+    padding-bottom: 44px;
+  }
+
+  .mobile-panel nav button {
+    border: 0;
+    background: transparent;
+    cursor: pointer;
+    font-family: Georgia, 'Times New Roman', serif;
+    font-size: clamp(54px, 18vw, 92px);
+    line-height: 0.95;
+    text-align: left;
+    opacity: 0;
+    transform: translateY(22px);
+    transition: opacity 420ms ease, transform 620ms cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+
+  .mobile-panel.is-open nav button {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .mobile-panel.is-open nav button:nth-child(2) {
+    transition-delay: 80ms;
+  }
 
   .loader__track {
     width: calc(100vw - 40px);
